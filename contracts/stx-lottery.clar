@@ -401,19 +401,19 @@
          (match-4-pool (/ (* total-prize-pool MATCH_4_PRIZE_PERCENT) u100))
          (match-3-pool (/ (* total-prize-pool MATCH_3_PRIZE_PERCENT) u100))
          (match-2-pool (/ (* total-prize-pool MATCH_2_PRIZE_PERCENT) u100))
-         (total-claimed-prize (+ 
+         (total-winner-prize (+ 
             (if (> match-4-count u0) match-4-pool u0)
             (if (> match-3-count u0) match-3-pool u0)
             (if (> match-2-count u0) match-2-pool u0)
          ))
-         (no-winner-prize (- total-prize-pool total-claimed-prize)))
+         (no-winner-prize (- total-prize-pool total-winner-prize)))
 
         (map-set lottery-rounds (var-get current-round-id)
             (merge current-round {
                 winning-numbers: (var-get drawn-number),
                 is-ended: true,
                 no-winner-prize: no-winner-prize,
-                unclaimed-prize: total-prize-pool,
+                unclaimed-prize: total-winner-prize,
                 end-block: stacks-block-height
             })
         )
